@@ -88,13 +88,13 @@ assistente-ia-web/
 1. **Clone o repositório:**
 
 ```bash
-git clone https://github.com/henrique151/assistente-ia-web.git
+git clone git@github.com:henrique151/Assistente-IA-Web.git
 ```
 
 2. **Acesse a pasta do projeto:**
 
 ```bash
-cd assistente-ia-web
+cd Assistente-IA-Web
 ```
 
 3. **Abra o arquivo `index.html`:**
