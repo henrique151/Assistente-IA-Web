@@ -49,19 +49,27 @@ assistente-ia-web/
 
 ### Requisitos Básicos
 
-- **01 - Estrutura HTML Básica e CSS:** Isadora, Camila
-- **02 - Interface de Entrada:** Geraldo
-- **03 - Exibição da Resposta:** Jéssica
-- **04 - Integração com API da IA:** Andreza
+| Requisito                   | Responsável     |
+| --------------------------- | --------------- |
+| Estrutura HTML Básica e CSS | Isadora, Camila |
+| Interface de Entrada        | Geraldo         |
+| Exibição da Resposta        | Jéssica         |
+| Integração com API da IA    | Andreza         |
 
 ### Requisitos Extras
 
-- **Estados e Validação:** Henrique
-- **Melhorias na Interface:** Sabrina
+| Requisito              | Responsável |
+| ---------------------- | ----------- |
+| Estados e Validação    | Henrique    |
+| Melhorias na Interface | Sabrina     |
 
-### GitHub
+---
 
-- **Gerente do Repositório:** Henrique
+## 📦 GitHub
+
+| Tarefa                 | Responsável |
+| ---------------------- | ----------- |
+| Gerente do Repositório | Henrique    |
 
 ---
 
