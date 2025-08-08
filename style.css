@@ -1,3 +1,9 @@
 #resposta-ia {
   display: none;
 }
+.resposta {
+  margin-top: 20px;
+  background-color: #f4f4f4;
+  padding: 10px;
+  border-radius: 6px;
+}
