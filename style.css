@@ -1,5 +1,9 @@
-#resposta-ia {
-  display: none;
+#container-resposta {
+  display: none; 
+  background-color: #f9f9f9;
+  padding: 15px;
+  border-radius: 8px;
+  margin-top: 20px;
 }
 
 #btn-perguntar {
@@ -16,12 +20,14 @@
   margin-right: 8px;
   font-size: 18px;
 }
-.resposta {
+
+#resposta {
   margin-top: 20px;
-  background-color: #f4f4f4;
+  background-color: #ffffff;
   padding: 10px;
   border-radius: 6px;
 }
+
 
 button:disabled {
   cursor: not-allowed;

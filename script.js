@@ -47,6 +47,8 @@ btn.addEventListener("click", async () => {
   }
 
   let respostaDiv = document.getElementById("resposta");
+  let containerResposta = document.getElementById("container-resposta");
+
   if (!respostaDiv) {
     respostaDiv = document.createElement("div");
     respostaDiv.id = "resposta";
@@ -54,7 +56,10 @@ btn.addEventListener("click", async () => {
     document.querySelector(".conteudo").appendChild(respostaDiv);
   }
 
+  containerResposta.style.display = "block";
+  
   definirCarregando(true);
+
   respostaDiv.innerText = "Carregando resposta...";
 
   try {
@@ -87,6 +92,9 @@ btn.addEventListener("click", async () => {
       data?.candidates?.[0]?.content?.parts?.[0]?.text ||
       "Nenhuma resposta recebida.";
     respostaDiv.innerText = respostaTexto;
+    
+    respostaDiv.style.display = "block"
+
   } catch (erro) {
     mostrarErro("Erro na conexão. Verifique sua internet e tente novamente.");
     console.error(erro);
