@@ -37,9 +37,7 @@ btn.addEventListener("click", async () => {
   const pergunta = document.getElementById("pergunta").value.trim();
 
   const btn = document.getElementById("btn-perguntar");
-  
-
-
+ 
   if (!apiKey) {
     mostrarErro("Por favor, insira sua API Key.");
     return;
@@ -50,6 +48,7 @@ btn.addEventListener("click", async () => {
     return;
   }
 
+  /*  let respostaDiv = document.getElementById("resposta");
 
   let respostaDiv = document.getElementById("resposta");
   let containerResposta = document.getElementById("container-resposta");
@@ -59,7 +58,15 @@ btn.addEventListener("click", async () => {
     respostaDiv.id = "resposta";
     respostaDiv.classList.add("resposta");
     document.querySelector(".conteudo").appendChild(respostaDiv);
-  }
+  } */
+
+  // Pega os elementos do box de resposta
+  const respostaBox = document.getElementById("resposta-ia");
+  const respostaTextoDiv = document.getElementById("texto-resposta");
+
+
+  respostaBox.style.display = "block";
+  respostaTextoDiv.innerText = "Carregando resposta...";
 
 
   // Função para exibir mensagens
@@ -101,22 +108,29 @@ btn.addEventListener("click", async () => {
       }
     );
 
+
     if (!response.ok) {
       mostrarErro(mensagensErro[response.status] || "Erro desconhecido.");
       respostaDiv.innerHTML = "Nenhuma resposta recebida.";
       return;
     }
 
+
     const data = await response.json();
 
     const respostaTexto =
       data?.candidates?.[0]?.content?.parts?.[0]?.text ||
       "Nenhuma resposta recebida.";
+
     respostaDiv.innerText = respostaTexto;
     
     respostaDiv.style.display = "block"
 
+
+    respostaTextoDiv.innerText = respostaTexto;
   } catch (erro) {
+    respostaTextoDiv.innerText =
+      "Erro ao acessar a API. Verifique sua chave e tente novamente.";
     mostrarErro("Erro na conexão. Verifique sua internet e tente novamente.");
     console.error(erro);
     respostaDiv.innerText = "Nenhuma resposta recebida.";
