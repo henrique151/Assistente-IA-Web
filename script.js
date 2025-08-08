@@ -14,6 +14,8 @@ document.getElementById("btn-perguntar").addEventListener("click", async () => {
   }
 
   let respostaDiv = document.getElementById("resposta");
+  let containerResposta = document.getElementById("container-resposta");
+
   if (!respostaDiv) {
     respostaDiv = document.createElement("div");
     respostaDiv.id = "resposta";
@@ -21,6 +23,7 @@ document.getElementById("btn-perguntar").addEventListener("click", async () => {
     document.querySelector(".conteudo").appendChild(respostaDiv);
   }
 
+  containerResposta.style.display = "block";
   respostaDiv.innerText = "Carregando resposta...";
 
   try {
@@ -40,6 +43,8 @@ document.getElementById("btn-perguntar").addEventListener("click", async () => {
 
     const respostaTexto = data?.candidates?.[0]?.content?.parts?.[0]?.text || "Nenhuma resposta recebida.";
     respostaDiv.innerText = respostaTexto;
+    
+    respostaDiv.style.display = "block"
 
   } catch (erro) {
     respostaDiv.innerText = "Erro ao acessar a API. Verifique sua chave e tente novamente.";
