@@ -6,11 +6,18 @@
     <link rel="stylesheet" href="style.css" />
     <title>Assistente de IA - Gemini</title>
     <link
-    rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
-    integrity="sha512-Fo3rlrZj/k7ujlZH0G/g2f7tVqQ9E/z3q6Uf6u6yQG92Q5zX0Hk0Jz0jKjQ9Q9U5Q=="
-    crossorigin="anonymous"
-    referrerpolicy="no-referrer"
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+      integrity="sha512-Fo3rlrZj/k7ujlZH0G/g2f7tVqQ9E/z3q6Uf6u6yQG92Q5zX0Hk0Jz0jKjQ9Q9U5Q=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link rel="stylesheet" href="style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+      rel="stylesheet"
     />
   </head>
 
@@ -43,25 +50,35 @@
 
         <main class="conteudo">
           <div class="formulario-pergunta">
-            <label for="pergunta">Faça sua pergunta:</label>
-            <textarea
-              id="pergunta"
-              name="pergunta"
-              rows="4"
-              placeholder="Digite sua pergunta aqui..."
-            ></textarea>
-            <span id="char-count">0/500</span>
-          </div>
+            <label for="pergunta"><h2 class="resposta-titulo">Faça sua pergunta: </h2></label>
+            <div class="pergunta-area">
+              <div class="campo-texto">
+                <textarea
+                  id="pergunta"
+                  name="pergunta"
+                  rows="4"
+                  placeholder="Digite sua pergunta aqui..."
+                ></textarea>
+                <span id="char-count">0/500</span>
+              </div>
 
-          <button id="btn-perguntar">
-          <i class="fas fa-papper-plane"></i> Perguntar
-        </button>
-          <div id="feedback-erro" class="mensagem-erro" style="display: none;"></div>
+              <button id="btn-perguntar">
+                <i class="fas fa-papper-plane"></i>Perguntar
+              </button>
+            </div>
+
+          <div
+            id="feedback-erro"
+            class="mensagem-erro"
+            style="display: none"
+          ></div>
         </main>
       </section>
 
-      <div id="resposta-ia"></div>
-    </div>
+<div id="resposta-ia" style="display: none;">
+  <h2 class="resposta-titulo">Resposta da IA:</h2>
+  <div id="texto-resposta"></div>
+</div>
     <script src="script.js"></script>
   </body>
 </html>
