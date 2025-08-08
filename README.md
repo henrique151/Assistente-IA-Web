@@ -63,8 +63,6 @@ assistente-ia-web/
 | Estados e Validação    | Henrique    |
 | Melhorias na Interface | Sabrina     |
 
----
-
 ## 📦 GitHub
 
 | Tarefa                 | Responsável |
