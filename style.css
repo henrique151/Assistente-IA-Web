@@ -1,3 +1,4 @@
+
 * {
   margin: 0;
   padding: 0;
@@ -95,10 +96,47 @@ background-color: #5848c2;
 
 #resposta-ia {
   display: none;
-}
-.resposta {
+
+#container-resposta {
+  display: none; 
+  background-color: #f9f9f9;
+  padding: 15px;
+  border-radius: 8px;
   margin-top: 20px;
-  background-color: #f4f4f4;
+}
+
+#btn-perguntar {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+#btn-perguntar .fas {
+  margin-right: 8px;
+  font-size: 18px;
+
+}
+
+#resposta {
+  margin-top: 20px;
+  background-color: #ffffff;
   padding: 10px;
   border-radius: 6px;
+}
+
+
+button:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+#gif-carregamento {
+  display: none;
+  width: 20px;
+  height: 20px;
+  margin-left: 8px;
 }
