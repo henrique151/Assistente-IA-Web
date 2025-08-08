@@ -5,6 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="style.css" />
     <title>Assistente de IA - Gemini</title>
+    <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    integrity="sha512-Fo3rlrZj/k7ujlZH0G/g2f7tVqQ9E/z3q6Uf6u6yQG92Q5zX0Hk0Jz0jKjQ9Q9U5Q=="
+    crossorigin="anonymous"
+    referrerpolicy="no-referrer"
+    />
   </head>
 
   <body>
@@ -43,9 +50,13 @@
               rows="4"
               placeholder="Digite sua pergunta aqui..."
             ></textarea>
+            <span id="char-count">0/500</span>
           </div>
 
-          <button id="btn-perguntar">Perguntar</button>
+          <button id="btn-perguntar">
+          <i class="fas fa-papper-plane"></i> Perguntar
+        </button>
+          <div id="feedback-erro" class="mensagem-erro" style="display: none;"></div>
         </main>
       </section>
 
