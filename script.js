@@ -2,17 +2,8 @@ document.getElementById("btn-perguntar").addEventListener("click", async () => {
   const apiKey = document.getElementById("api-key").value.trim();
   const modelo = document.getElementById("modelo-gemini").value;
   const pergunta = document.getElementById("pergunta").value.trim();
-
-  if (!apiKey) {
-    alert("Por favor, insira sua API Key.");
-    return;
-  }
-
-  if (!pergunta) {
-    alert("Digite uma pergunta.");
-    return;
-  }
-
+  const btn = document.getElementById("btn-perguntar");
+  
   let respostaDiv = document.getElementById("resposta");
   if (!respostaDiv) {
     respostaDiv = document.createElement("div");
@@ -21,7 +12,19 @@ document.getElementById("btn-perguntar").addEventListener("click", async () => {
     document.querySelector(".conteudo").appendChild(respostaDiv);
   }
 
-  respostaDiv.innerText = "Carregando resposta...";
+  // Função para exibir mensagens
+  const mostrarMensagem = (mensagem, tipo = "info") => {
+    respostaDiv.innerHTML = `<p class="${tipo}">${mensagem}</p>`;
+  };
+
+  // Validações
+  if (!apiKey) return mostrarMensagem("🔑 Por favor, insira sua API Key.", "erro");
+  if (!pergunta) return mostrarMensagem("💬 Digite uma pergunta antes de continuar.", "erro");
+
+  // Desativar botão e mostrar carregamento
+  btn.disabled = true;
+  mostrarMensagem("<span class='loading'></span> Carregando resposta...");
+
 
   try {
     const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${modelo}:generateContent?key=${apiKey}`, {
