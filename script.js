@@ -36,6 +36,10 @@ btn.addEventListener("click", async () => {
   const modelo = document.getElementById("modelo-gemini").value;
   const pergunta = document.getElementById("pergunta").value.trim();
 
+  const btn = document.getElementById("btn-perguntar");
+  
+
+
   if (!apiKey) {
     mostrarErro("Por favor, insira sua API Key.");
     return;
@@ -45,6 +49,7 @@ btn.addEventListener("click", async () => {
     mostrarErro("Digite uma pergunta.");
     return;
   }
+
 
   let respostaDiv = document.getElementById("resposta");
   let containerResposta = document.getElementById("container-resposta");
@@ -56,11 +61,27 @@ btn.addEventListener("click", async () => {
     document.querySelector(".conteudo").appendChild(respostaDiv);
   }
 
+
+  // Função para exibir mensagens
+  const mostrarMensagem = (mensagem, tipo = "info") => {
+    respostaDiv.innerHTML = `<p class="${tipo}">${mensagem}</p>`;
+  };
+
+  // Validações
+  if (!apiKey) return mostrarMensagem("🔑 Por favor, insira sua API Key.", "erro");
+  if (!pergunta) return mostrarMensagem("💬 Digite uma pergunta antes de continuar.", "erro");
+
+  // Desativar botão e mostrar carregamento
+  btn.disabled = true;
+  mostrarMensagem("<span class='loading'></span> Carregando resposta...");
+
+
   containerResposta.style.display = "block";
   
   definirCarregando(true);
 
   respostaDiv.innerText = "Carregando resposta...";
+
 
   try {
     const response = await fetch(
