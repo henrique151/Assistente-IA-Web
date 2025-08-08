@@ -13,12 +13,24 @@
 }
 
 #btn-perguntar .fas {
-  margin-right: 8px; 
-  font-size: 18px; 
+  margin-right: 8px;
+  font-size: 18px;
 }
 .resposta {
   margin-top: 20px;
   background-color: #f4f4f4;
   padding: 10px;
   border-radius: 6px;
+}
+
+button:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+#gif-carregamento {
+  display: none;
+  width: 20px;
+  height: 20px;
+  margin-left: 8px;
 }
