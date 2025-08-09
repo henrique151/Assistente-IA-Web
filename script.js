@@ -17,9 +17,18 @@ const containerResposta = document.getElementById("container-resposta");
 const respostaDiv = document.getElementById("resposta");
 const MAXIMO_CARACTERES = 500;
 
+const perguntaExibida = document.getElementById("pergunta-exibida");
+
 perguntaTextarea.addEventListener("input", () => {
   const currentLength = perguntaTextarea.value.length;
   contagemCaracteres.textContent = `${currentLength}/${MAXIMO_CARACTERES}`;
+});
+
+perguntaTextarea.addEventListener("keydown", (e) => {
+  if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) {
+    e.preventDefault(); 
+    btn.click(); 
+  }
 });
 
 function mostrarErro(mensagem) {
@@ -58,6 +67,9 @@ btn.addEventListener("click", async () => {
   containerResposta.style.display = "block";
   respostaDiv.innerText = "Carregando resposta...";
 
+  perguntaExibida.innerHTML = `<strong>Sua pergunta:</strong> ${pergunta}`;
+  perguntaExibida.style.display = 'block';
+
   try {
     const response = await fetch(
       `https://generativelanguage.googleapis.com/v1beta/models/${modelo}:generateContent?key=${apiKey}`,
@@ -90,6 +102,7 @@ btn.addEventListener("click", async () => {
     respostaDiv.innerText = respostaTexto;
 
     respostaDiv.style.display = "block";
+    containerResposta.scrollIntoView({ behavior: 'smooth', block: 'end' });
   } catch (erro) {
     mostrarErro("Erro na conexão. Verifique sua internet e tente novamente.");
     console.error(erro);
