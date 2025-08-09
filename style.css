@@ -1,142 +1,171 @@
-
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-body {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background-color: #f2f4f8;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
+:root {
+  --text-color: #274c77;
+  --background-color: #e7ecef;
 }
 
-
-
+body {
+  font-family: "Poppins", sans-serif;
+  display: flex;
+  justify-content: center;
+  padding: 20px;
+  border-radius: 15px;
+  color: var(--text-color);
+  background-color: var(--background-color);
+}
 
 .container {
-  background-color: #ffffff;
-  padding: 30px;
-  border-radius: 15px;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
-  width: 100%;
-  max-width: 500px;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  width: 600px;
+}
+
+.cabecalho {
+  background-color: #75abcf;
+  border-bottom: 1px solid #274c77;
+  padding: 20px;
 }
 
 .titulo {
-  text-align: center;
-  color: #2c3e50;
-  font-size: 24px;
-  margin-bottom: 20px;
+  font-size: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 15px;
+  color: #274c77;
 }
 
-.emoji {
-  font-size: 26px;
-  margin-right: 5px;
+.configuracoes {
+  display: flex;
+  gap: 40px;
+  align-items: center;
+  justify-content: center;
 }
 
-.configuracoes label{
+.configuracoes label {
   font-weight: bold;
+  display: block;
   margin-bottom: 5px;
-  color: #34495e;  
 }
 
-input[type="text"],
-select,
-textarea {
+.configuracoes input,
+.configuracoes select {
   width: 100%;
-  padding: 10px 12px;
+  padding: 10px;
   border: 1px solid #ccc;
-  border-radius: 8px;
-  font-size: 14px;
-  transition: border 0.3s ease;
+  border-radius: 5px;
+  background-color: #e7ecef;
+  font-size: 16px;
 }
 
-input:focus,
-select:focus,
-textarea:focus {
-  border-color: #6c63ff;
-  outline: none;
+.conteudo {
+  display: flex;
+  flex-direction: column;
+  background-color: #aecae2;
+  padding: 20px;
+  justify-content: center;
 }
 
 .formulario-pergunta {
+  margin-bottom: 10px;
+}
+
+.formulario-pergunta label {
+  font-weight: bold;
+  display: block;
   margin-bottom: 20px;
 }
 
-button#btn-perguntar {
-  background-color: #6c63ff;
-  color: white;
-  border: none;
-  padding: 12px;
-  border-radius: 8px;
-  width: 100%;
+#char-count {
   font-size: 16px;
+  color: #555;
+  margin-top: 5px;
+  display: block;
+  text-align: right;
+}
+
+textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  resize: none;
+  background-color: #e7ecef;
+  font-size: 16px;
+}
+
+#btn-perguntar {
+  background-color: #274c77;
+  color: #e7ecef;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 5px;
   cursor: pointer;
-  transition: background 0.3s;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
 }
 
-button#btn-perguntar:hover {
-background-color: #5848c2;
+#btn-perguntar .fas {
+  font-size: 18px;
 }
 
-
-#resposta-ia {
-  margin-top: 20px;
-  padding: 15px;
-  background-color: #ecf0f1;
-  border-radius: 10px;
-  color: #2c3e50;
-  font-size: 14px;
-  white-space: pre-wrap;
+#btn-perguntar:hover {
+  background-color: #19324f;
 }
 
-
-#resposta-ia {
-  display: none;
+#btn-perguntar:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+  background-color: #274c77;
+}
 
 #container-resposta {
-  display: none; 
+  display: none;
   background-color: #f9f9f9;
   padding: 15px;
   border-radius: 8px;
   margin-top: 20px;
 }
 
-#btn-perguntar {
-  background-color: #007bff;
-  color: white;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 16px;
+.resposta-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
 }
 
-#btn-perguntar .fas {
-  margin-right: 8px;
+.resposta-header h4 {
   font-size: 18px;
-
+  color: var(--text-color);
 }
 
-#resposta {
-  margin-top: 20px;
-  background-color: #ffffff;
+#btn-copiar {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 18px;
+  color: #555;
+  padding: 5px;
+}
+
+#btn-copiar:hover {
+  color: #000;
+}
+
+#feedback-erro {
+  background-color: #f8d7da;
+  color: #721c24;
   padding: 10px;
-  border-radius: 6px;
-}
-
-
-button:disabled {
-  cursor: not-allowed;
-  opacity: 0.6;
-}
-
-#gif-carregamento {
-  display: none;
-  width: 20px;
-  height: 20px;
-  margin-left: 8px;
+  border-radius: 5px;
+  margin-top: 15px;
 }

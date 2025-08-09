@@ -39,8 +39,6 @@ assistente-ia-web/
 - **JavaScript (Vanilla)**: Lógica da aplicação, manipulação do DOM, integração com APIs
 - **API Fetch + async/await**: Comunicação assíncrona com OpenAI/Gemini
 - **Validação de formulários**: Garantia de dados obrigatórios
-- **localStorage**: Salvamento da API Key do usuário
-- **Clipboard API**: Copiar resposta da IA
 - **Acessibilidade e UX**: Foco em boa experiência do usuário
 
 ---

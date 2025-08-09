@@ -6,12 +6,21 @@ const mensagensErro = {
   400: "Não foi possível processar sua solicitação. Verifique os dados e tente novamente.",
 };
 
-let isLoading = false;
-
 const btn = document.getElementById("btn-perguntar");
 const btnText = document.getElementById("btn-text");
-const carregamento = document.getElementById("gif-carregamento");
 const feedbackErro = document.getElementById("feedback-erro");
+const perguntaTextarea = document.getElementById("pergunta");
+const contagemCaracteres = document.getElementById("char-count");
+const apiKeyInput = document.getElementById("api-key");
+const modeloSelect = document.getElementById("modelo-gemini");
+const containerResposta = document.getElementById("container-resposta");
+const respostaDiv = document.getElementById("resposta");
+const MAXIMO_CARACTERES = 500;
+
+perguntaTextarea.addEventListener("input", () => {
+  const currentLength = perguntaTextarea.value.length;
+  contagemCaracteres.textContent = `${currentLength}/${MAXIMO_CARACTERES}`;
+});
 
 function mostrarErro(mensagem) {
   feedbackErro.innerText = mensagem;
@@ -26,62 +35,28 @@ function esconderErro() {
 function definirCarregando(ativo) {
   btn.disabled = ativo;
   btnText.innerText = ativo ? "Carregando..." : "Perguntar";
-  carregamento.style.display = ativo ? "inline-block" : "none";
 }
 
 btn.addEventListener("click", async () => {
   esconderErro();
 
-  const apiKey = document.getElementById("api-key").value.trim();
-  const modelo = document.getElementById("modelo-gemini").value;
-  const pergunta = document.getElementById("pergunta").value.trim();
-
-  const btn = document.getElementById("btn-perguntar");
-  
-
+  const apiKey = apiKeyInput.value.trim();
+  const modelo = modeloSelect.value;
+  const pergunta = perguntaTextarea.value.trim();
 
   if (!apiKey) {
-    mostrarErro("Por favor, insira sua API Key.");
+    mostrarErro("🔑 Por favor, insira sua API Key para continuar.");
     return;
   }
 
   if (!pergunta) {
-    mostrarErro("Digite uma pergunta.");
+    mostrarErro("💬 Por favor, digite uma pergunta antes de continuar.");
     return;
   }
 
-
-  let respostaDiv = document.getElementById("resposta");
-  let containerResposta = document.getElementById("container-resposta");
-
-  if (!respostaDiv) {
-    respostaDiv = document.createElement("div");
-    respostaDiv.id = "resposta";
-    respostaDiv.classList.add("resposta");
-    document.querySelector(".conteudo").appendChild(respostaDiv);
-  }
-
-
-  // Função para exibir mensagens
-  const mostrarMensagem = (mensagem, tipo = "info") => {
-    respostaDiv.innerHTML = `<p class="${tipo}">${mensagem}</p>`;
-  };
-
-  // Validações
-  if (!apiKey) return mostrarMensagem("🔑 Por favor, insira sua API Key.", "erro");
-  if (!pergunta) return mostrarMensagem("💬 Digite uma pergunta antes de continuar.", "erro");
-
-  // Desativar botão e mostrar carregamento
-  btn.disabled = true;
-  mostrarMensagem("<span class='loading'></span> Carregando resposta...");
-
-
-  containerResposta.style.display = "block";
-  
   definirCarregando(true);
-
+  containerResposta.style.display = "block";
   respostaDiv.innerText = "Carregando resposta...";
-
 
   try {
     const response = await fetch(
@@ -113,9 +88,8 @@ btn.addEventListener("click", async () => {
       data?.candidates?.[0]?.content?.parts?.[0]?.text ||
       "Nenhuma resposta recebida.";
     respostaDiv.innerText = respostaTexto;
-    
-    respostaDiv.style.display = "block"
 
+    respostaDiv.style.display = "block";
   } catch (erro) {
     mostrarErro("Erro na conexão. Verifique sua internet e tente novamente.");
     console.error(erro);
