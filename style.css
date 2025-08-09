@@ -7,8 +7,32 @@
 :root {
   --text-color: #274c77;
   --background-color: #e7ecef;
+  --container-bg: #aecae2;
+  --cabecalho-bg: #75abcf;
+  --cabecalho-border: #274c77;
+  --caixa-texto-bg: #e7ecef;
+  --botao-principal-bg: #274c77;
+  --botao-principal-hover: #19324f;
+  --resposta-bg: #f9f9f9;
+  --feedback-erro-bg: #f8d7da;
+  --feedback-erro-text: #721c24;
 }
 
+@media (prefers-color-scheme: dark) {
+  :root {
+    --text-color: #e7ecef;
+    --background-color: #19324f;
+    --container-bg: #274c77;
+    --cabecalho-bg: #19324f;
+    --cabecalho-border: #aecae2;
+    --caixa-texto-bg: #325880;
+    --botao-principal-bg: #75abcf;
+    --botao-principal-hover: #5a88b5;
+    --resposta-bg: #325880;
+    --feedback-erro-bg: #4f2c2f;
+    --feedback-erro-text: #e7ecef;
+  }
+}
 body {
   font-family: "Poppins", sans-serif;
   display: flex;
@@ -17,19 +41,23 @@ body {
   border-radius: 15px;
   color: var(--text-color);
   background-color: var(--background-color);
+  transition: background-color 0.3s ease, color 0.3s ease; 
 }
+
 
 .container {
   border-radius: 20px;
   overflow: hidden;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
   width: 600px;
+  max-width: 90%;
 }
 
 .cabecalho {
-  background-color: #75abcf;
-  border-bottom: 1px solid #274c77;
+  background-color: var(--cabecalho-bg);
+  border-bottom: 1px solid var(--cabecalho-border);
   padding: 20px;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
 .titulo {
@@ -39,7 +67,7 @@ body {
   justify-content: center;
   gap: 8px;
   margin-bottom: 15px;
-  color: #274c77;
+  color: var(--cabecalho-border);
 }
 
 .configuracoes {
@@ -61,16 +89,20 @@ body {
   padding: 10px;
   border: 1px solid #ccc;
   border-radius: 5px;
-  background-color: #e7ecef;
+  background-color: var(--caixa-texto-bg);
   font-size: 16px;
+  color: var(--text-color); 
+  font-size: 16px;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .conteudo {
   display: flex;
   flex-direction: column;
-  background-color: #aecae2;
+  background-color: var(--container-bg);
   padding: 20px;
   justify-content: center;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .formulario-pergunta {
@@ -89,6 +121,7 @@ body {
   margin-top: 5px;
   display: block;
   text-align: right;
+  color: var(--text-color);
 }
 
 textarea {
@@ -97,13 +130,15 @@ textarea {
   border: 1px solid #ccc;
   border-radius: 5px;
   resize: none;
-  background-color: #e7ecef;
+  background-color: var(--caixa-texto-bg);
+  color: var(--text-color);
   font-size: 16px;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 #btn-perguntar {
-  background-color: #274c77;
-  color: #e7ecef;
+  background-color: var(--botao-principal-bg);
+  color: var(--background-color);
   border: none;
   padding: 10px 16px;
   border-radius: 5px;
@@ -113,6 +148,7 @@ textarea {
   align-items: center;
   justify-content: center;
   gap: 8px;
+  transition: background-color 0.3s ease;
 }
 
 #btn-perguntar .fas {
@@ -120,21 +156,22 @@ textarea {
 }
 
 #btn-perguntar:hover {
-  background-color: #19324f;
+  background-color: var(--botao-principal-hover);
 }
 
 #btn-perguntar:disabled {
   opacity: 0.7;
   cursor: not-allowed;
-  background-color: #274c77;
+  background-color: var(--botao-principal-bg);
 }
 
 #container-resposta {
   display: none;
-  background-color: #f9f9f9;
+  background-color: var(--resposta-bg);
   padding: 15px;
   border-radius: 8px;
   margin-top: 20px;
+  transition: background-color 0.3s ease;
 }
 
 .resposta-header {
@@ -154,18 +191,58 @@ textarea {
   border: none;
   cursor: pointer;
   font-size: 18px;
-  color: #555;
+  color: var(--text-color);
   padding: 5px;
+  transition: color 0.3s ease;
 }
 
 #btn-copiar:hover {
-  color: #000;
+  color: var(--text-color);
+  filter: brightness(70%);
 }
 
 #feedback-erro {
-  background-color: #f8d7da;
-  color: #721c24;
+  background-color: var(--feedback-erro-bg);
+  color: var(--feedback-erro-text);
   padding: 10px;
   border-radius: 5px;
   margin-top: 15px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+@media (max-width: 768px) {
+  body {
+    padding: 10px;
+  }
+  .container {
+    max-width: 95%;
+  }
+  .configuracoes {
+    flex-direction: column;
+    gap: 20px;
+  }
+  .configuracoes > div {
+    width: 100%;
+  }
+  .titulo {
+    font-size: 28px;
+  }
+}
+
+
+@media (max-width: 480px) {
+  .titulo {
+    font-size: 24px;
+    flex-direction: column;
+    text-align: center;
+  }
+  .configuracoes {
+    gap: 15px;
+  }
+  .cabecalho, .conteudo {
+    padding: 15px;
+  }
+  #btn-perguntar {
+    font-size: 14px;
+    padding: 8px 12px;
+  }
 }
