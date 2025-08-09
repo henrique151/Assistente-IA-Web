@@ -1,10 +1,12 @@
 const mensagensErro = {
+  400: "Não foi possível processar sua solicitação. Verifique os dados e tente novamente.",
   401: "Sua chave de API não foi reconhecida. Verifique e tente novamente.",
   403: "Sua chave de API não foi reconhecida. Verifique e tente novamente.",
   429: "Você atingiu o limite de uso da API. Aguarde alguns minutos e tente novamente.",
   500: "O serviço está com instabilidade no momento. Tente novamente mais tarde.",
-  400: "Não foi possível processar sua solicitação. Verifique os dados e tente novamente.",
 };
+
+const MAXIMO_CARACTERES = 500;
 
 const btn = document.getElementById("btn-perguntar");
 const btnText = document.getElementById("btn-text");
@@ -15,35 +17,20 @@ const apiKeyInput = document.getElementById("api-key");
 const modeloSelect = document.getElementById("modelo-gemini");
 const containerResposta = document.getElementById("container-resposta");
 const respostaDiv = document.getElementById("resposta");
-const MAXIMO_CARACTERES = 500;
-
 const perguntaExibida = document.getElementById("pergunta-exibida");
-
+const salvarKeyCheckbox = document.getElementById("salvar-key");
+const btnCopiar = document.getElementById("btn-copiar");
+const btnLimparHistorico = document.getElementById("btn-limpar-historico");
+const listaHistorico = document.getElementById("lista-historico");
+const btnLimpar = document.getElementById("btn-limpar");
 const apiKeySalva = localStorage.getItem("apiKey");
+
+let historico = [];
+
 if (apiKeySalva) {
   apiKeyInput.value = apiKeySalva;
   salvarKeyCheckbox.checked = true;
 }
-
-apiKeyInput.addEventListener("input", () => {
-  if (salvarKeyCheckbox.checked) {
-    localStorage.setItem("apiKey", apiKeyInput.value.trim());
-  } else {
-    localStorage.removeItem("apiKey");
-  }
-});
-
-perguntaTextarea.addEventListener("input", () => {
-  const currentLength = perguntaTextarea.value.length;
-  contagemCaracteres.textContent = `${currentLength}/${MAXIMO_CARACTERES}`;
-});
-
-perguntaTextarea.addEventListener("keydown", (e) => {
-  if (e.key === "Enter" && (e.ctrlKey || e.metaKey)) {
-    e.preventDefault();
-    btn.click();
-  }
-});
 
 function mostrarErro(mensagem) {
   feedbackErro.innerText = mensagem;
@@ -57,29 +44,42 @@ function esconderErro() {
 
 function definirCarregando(ativo) {
   btn.disabled = ativo;
+  btnLimpar.disabled = ativo;
   btnText.innerText = ativo ? "Carregando..." : "Perguntar";
 }
 
-btn.addEventListener("click", async () => {
+function salvarHistorico(pergunta, resposta) {
+  historico.push({ pergunta, resposta });
+  renderizarHistorico();
+}
+
+function renderizarHistorico() {
+  listaHistorico.innerHTML = "";
+  historico.forEach((item) => {
+    const li = document.createElement("li");
+    li.innerHTML = `
+      <strong>Pergunta:</strong> <span class="pergunta">${item.pergunta}</span><br>
+      <strong>Resposta:</strong> <span class="resposta">${item.resposta}</span>
+    `;
+    listaHistorico.appendChild(li);
+  });
+}
+
+async function enviarPergunta() {
   esconderErro();
 
   const apiKey = apiKeyInput.value.trim();
   const modelo = modeloSelect.value;
   const pergunta = perguntaTextarea.value.trim();
 
-  if (!apiKey) {
-    mostrarErro("🔑 Por favor, insira sua API Key para continuar.");
-    return;
-  }
+  if (!apiKey)
+    return mostrarErro("🔑 Por favor, insira sua API Key para continuar.");
+  if (!pergunta)
+    return mostrarErro("💬 Por favor, digite uma pergunta antes de continuar.");
 
-  if (!pergunta) {
-    mostrarErro("💬 Por favor, digite uma pergunta antes de continuar.");
-    return;
-  }
   definirCarregando(true);
   containerResposta.style.display = "block";
   respostaDiv.innerText = "Carregando resposta...";
-
   perguntaExibida.innerHTML = `<strong>Sua pergunta:</strong> ${pergunta}`;
   perguntaExibida.style.display = "block";
 
@@ -88,34 +88,27 @@ btn.addEventListener("click", async () => {
       `https://generativelanguage.googleapis.com/v1beta/models/${modelo}:generateContent?key=${apiKey}`,
       {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          contents: [
-            {
-              parts: [{ text: pergunta }],
-            },
-          ],
-        }),
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ contents: [{ parts: [{ text: pergunta }] }] }),
       }
     );
 
     if (!response.ok) {
       mostrarErro(mensagensErro[response.status] || "Erro desconhecido.");
-      respostaDiv.innerHTML = "Nenhuma resposta recebida.";
+      respostaDiv.innerText = "Nenhuma resposta recebida.";
       return;
     }
 
     const data = await response.json();
-
     const respostaTexto =
       data?.candidates?.[0]?.content?.parts?.[0]?.text ||
       "Nenhuma resposta recebida.";
-    respostaDiv.innerText = respostaTexto;
 
+    respostaDiv.innerHTML = marked.parse(respostaTexto);
     respostaDiv.style.display = "block";
     containerResposta.scrollIntoView({ behavior: "smooth", block: "end" });
+
+    salvarHistorico(pergunta, respostaTexto);
   } catch (erro) {
     mostrarErro("Erro na conexão. Verifique sua internet e tente novamente.");
     console.error(erro);
@@ -123,17 +116,73 @@ btn.addEventListener("click", async () => {
   } finally {
     definirCarregando(false);
   }
+}
+
+apiKeyInput.addEventListener("input", () => {
+  if (salvarKeyCheckbox.checked) {
+    localStorage.setItem("apiKey", apiKeyInput.value.trim());
+  } else {
+    localStorage.removeItem("apiKey");
+  }
 });
 
-const btnLimpar = document.getElementById("btn-limpar");
+perguntaTextarea.addEventListener("input", () => {
+  contagemCaracteres.textContent = `${perguntaTextarea.value.length}/${MAXIMO_CARACTERES}`;
+});
+
+perguntaTextarea.addEventListener("keydown", (e) => {
+  if (e.key === "Enter" && (e.ctrlKey || e.metaKey)) {
+    e.preventDefault();
+    enviarPergunta();
+  }
+});
+
+btn.addEventListener("click", enviarPergunta);
 
 if (btnLimpar) {
   btnLimpar.addEventListener("click", () => {
     perguntaTextarea.value = "";
     contagemCaracteres.textContent = `0/${MAXIMO_CARACTERES}`;
-
     respostaDiv.innerText = "";
-
     containerResposta.style.display = "none";
   });
 }
+
+btnLimparHistorico.addEventListener("click", () => {
+  listaHistorico.innerHTML = "";
+  historico = [];
+});
+
+btnCopiar.addEventListener("click", () => {
+  const textoParaCopiar = `${perguntaExibida.innerText}\n${respostaDiv.innerText}`;
+  navigator.clipboard.writeText(textoParaCopiar).then(() => {
+    alert("Pergunta e resposta copiadas!");
+  });
+});
+
+const btnExportPDF = document.getElementById("btn-export");
+
+btnExportPDF.addEventListener("click", () => {
+  const lista = document.querySelectorAll("#lista-historico li");
+  if (lista.length === 0) return alert("Não há histórico para exportar!");
+
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF();
+  let y = 10;
+
+  lista.forEach((item) => {
+    const pergunta = item.querySelector(".pergunta")?.textContent || "";
+    const resposta = item.querySelector(".resposta")?.textContent || "";
+    doc.text(`Pergunta: ${pergunta}`, 10, y);
+    y += 10;
+    doc.text(`Resposta: ${resposta}`, 10, y);
+    y += 15;
+
+    if (y > 270) {
+      doc.addPage();
+      y = 10;
+    }
+  });
+
+  doc.save("historico.pdf");
+});
