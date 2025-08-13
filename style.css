@@ -41,9 +41,8 @@ body {
   border-radius: 15px;
   color: var(--text-color);
   background-color: var(--background-color);
-  transition: background-color 0.3s ease, color 0.3s ease; 
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
-
 
 .container {
   border-radius: 20px;
@@ -91,7 +90,7 @@ body {
   border-radius: 5px;
   background-color: var(--caixa-texto-bg);
   font-size: 16px;
-  color: var(--text-color); 
+  color: var(--text-color);
   font-size: 16px;
   transition: background-color 0.3s ease, color 0.3s ease;
 }
@@ -228,7 +227,6 @@ textarea {
   }
 }
 
-
 @media (max-width: 480px) {
   .titulo {
     font-size: 24px;
@@ -238,11 +236,36 @@ textarea {
   .configuracoes {
     gap: 15px;
   }
-  .cabecalho, .conteudo {
+  .cabecalho,
+  .conteudo {
     padding: 15px;
   }
   #btn-perguntar {
     font-size: 14px;
     padding: 8px 12px;
   }
+}
+
+#btn-limpar {
+  background-color: var(--botao-principal-bg);
+  color: var(--background-color);
+  border: none;
+  padding: 10px 16px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 8px;
+  transition: background-color 0.3s ease;
+}
+
+#btn-limpar .fas {
+  font-size: 18px;
+}
+
+#btn-limpar:hover {
+  background-color: var(--botao-principal-hover);
 }
