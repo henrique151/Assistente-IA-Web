@@ -19,15 +19,29 @@ const MAXIMO_CARACTERES = 500;
 
 const perguntaExibida = document.getElementById("pergunta-exibida");
 
+const apiKeySalva = localStorage.getItem("apiKey");
+if (apiKeySalva) {
+  apiKeyInput.value = apiKeySalva;
+  salvarKeyCheckbox.checked = true;
+}
+
+apiKeyInput.addEventListener("input", () => {
+  if (salvarKeyCheckbox.checked) {
+    localStorage.setItem("apiKey", apiKeyInput.value.trim());
+  } else {
+    localStorage.removeItem("apiKey");
+  }
+});
+
 perguntaTextarea.addEventListener("input", () => {
   const currentLength = perguntaTextarea.value.length;
   contagemCaracteres.textContent = `${currentLength}/${MAXIMO_CARACTERES}`;
 });
 
 perguntaTextarea.addEventListener("keydown", (e) => {
-  if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) {
-    e.preventDefault(); 
-    btn.click(); 
+  if (e.key === "Enter" && (e.ctrlKey || e.metaKey)) {
+    e.preventDefault();
+    btn.click();
   }
 });
 
@@ -62,13 +76,12 @@ btn.addEventListener("click", async () => {
     mostrarErro("💬 Por favor, digite uma pergunta antes de continuar.");
     return;
   }
-
   definirCarregando(true);
   containerResposta.style.display = "block";
   respostaDiv.innerText = "Carregando resposta...";
 
   perguntaExibida.innerHTML = `<strong>Sua pergunta:</strong> ${pergunta}`;
-  perguntaExibida.style.display = 'block';
+  perguntaExibida.style.display = "block";
 
   try {
     const response = await fetch(
@@ -102,7 +115,7 @@ btn.addEventListener("click", async () => {
     respostaDiv.innerText = respostaTexto;
 
     respostaDiv.style.display = "block";
-    containerResposta.scrollIntoView({ behavior: 'smooth', block: 'end' });
+    containerResposta.scrollIntoView({ behavior: "smooth", block: "end" });
   } catch (erro) {
     mostrarErro("Erro na conexão. Verifique sua internet e tente novamente.");
     console.error(erro);
@@ -111,3 +124,16 @@ btn.addEventListener("click", async () => {
     definirCarregando(false);
   }
 });
+
+const btnLimpar = document.getElementById("btn-limpar");
+
+if (btnLimpar) {
+  btnLimpar.addEventListener("click", () => {
+    perguntaTextarea.value = "";
+    contagemCaracteres.textContent = `0/${MAXIMO_CARACTERES}`;
+
+    respostaDiv.innerText = "";
+
+    containerResposta.style.display = "none";
+  });
+}
