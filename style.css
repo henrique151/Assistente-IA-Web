@@ -1,9 +1,11 @@
+/* Reset e box-sizing */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
+/* Variáveis de cores */
 :root {
   --text-color: #274c77;
   --background-color: #e7ecef;
@@ -18,6 +20,7 @@
   --feedback-erro-text: #721c24;
 }
 
+/* Modo escuro */
 @media (prefers-color-scheme: dark) {
   :root {
     --text-color: #e7ecef;
@@ -33,17 +36,19 @@
     --feedback-erro-text: #e7ecef;
   }
 }
+
+/* Body */
 body {
   font-family: "Poppins", sans-serif;
   display: flex;
   justify-content: center;
   padding: 20px;
-  border-radius: 15px;
   color: var(--text-color);
   background-color: var(--background-color);
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
+/* Container principal */
 .container {
   border-radius: 20px;
   overflow: hidden;
@@ -52,6 +57,7 @@ body {
   max-width: 90%;
 }
 
+/* Cabeçalho */
 .cabecalho {
   background-color: var(--cabecalho-bg);
   border-bottom: 1px solid var(--cabecalho-border);
@@ -69,6 +75,7 @@ body {
   color: var(--cabecalho-border);
 }
 
+/* Configurações do cabeçalho */
 .configuracoes {
   display: flex;
   gap: 40px;
@@ -91,10 +98,10 @@ body {
   background-color: var(--caixa-texto-bg);
   font-size: 16px;
   color: var(--text-color);
-  font-size: 16px;
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
+/* Conteúdo principal */
 .conteudo {
   display: flex;
   flex-direction: column;
@@ -116,7 +123,6 @@ body {
 
 #char-count {
   font-size: 16px;
-  color: #555;
   margin-top: 5px;
   display: block;
   text-align: right;
@@ -135,35 +141,47 @@ textarea {
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-#btn-perguntar {
-  background-color: var(--botao-principal-bg);
-  color: var(--background-color);
+/* Botões principais */
+button {
+  padding: 10px 20px;
   border: none;
-  padding: 10px 16px;
-  border-radius: 5px;
+  border-radius: 8px;
   cursor: pointer;
-  font-size: 16px;
+  font-weight: 600;
+  font-size: 14px;
+  transition: all 0.2s ease;
+}
+
+#btn-perguntar,
+#btn-limpar,
+.btn-export,
+#btn-limpar-historico {
+  background-color: var(--botao-principal-bg);
+  color: white;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 8px;
-  transition: background-color 0.3s ease;
+  margin-top: 5px;
 }
 
-#btn-perguntar .fas {
-  font-size: 18px;
-}
-
-#btn-perguntar:hover {
+#btn-perguntar:hover,
+#btn-limpar:hover,
+.btn-export:hover,
+#btn-limpar-historico:hover {
   background-color: var(--botao-principal-hover);
+  transform: translateY(-2px);
 }
 
-#btn-perguntar:disabled {
+#btn-perguntar:disabled,
+#btn-limpar:disabled:hover {
   opacity: 0.7;
   cursor: not-allowed;
   background-color: var(--botao-principal-bg);
 }
 
+/* Resposta */
 #container-resposta {
   display: none;
   background-color: var(--resposta-bg);
@@ -196,10 +214,26 @@ textarea {
 }
 
 #btn-copiar:hover {
-  color: var(--text-color);
   filter: brightness(70%);
 }
 
+/* Histórico */
+#container-historico {
+  margin-top: 20px;
+}
+
+.historico-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+#lista-historico {
+  list-style: none;
+}
+
+/* Feedback de erro */
 #feedback-erro {
   background-color: var(--feedback-erro-bg);
   color: var(--feedback-erro-text);
@@ -208,6 +242,22 @@ textarea {
   margin-top: 15px;
   transition: background-color 0.3s ease, color 0.3s ease;
 }
+
+/* Checkbox salvar key */
+#salvar-key {
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+  margin-right: 8px;
+}
+
+label[for="salvar-key"] {
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+/* Responsividade */
 @media (max-width: 768px) {
   body {
     padding: 10px;
@@ -218,9 +268,6 @@ textarea {
   .configuracoes {
     flex-direction: column;
     gap: 20px;
-  }
-  .configuracoes > div {
-    width: 100%;
   }
   .titulo {
     font-size: 28px;
@@ -244,28 +291,4 @@ textarea {
     font-size: 14px;
     padding: 8px 12px;
   }
-}
-
-#btn-limpar {
-  background-color: var(--botao-principal-bg);
-  color: var(--background-color);
-  border: none;
-  padding: 10px 16px;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 16px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  margin-top: 8px;
-  transition: background-color 0.3s ease;
-}
-
-#btn-limpar .fas {
-  font-size: 18px;
-}
-
-#btn-limpar:hover {
-  background-color: var(--botao-principal-hover);
 }
