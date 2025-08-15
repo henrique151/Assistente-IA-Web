@@ -19,20 +19,6 @@ const MAXIMO_CARACTERES = 500;
 
 const perguntaExibida = document.getElementById("pergunta-exibida");
 
-const apiKeySalva = localStorage.getItem("apiKey");
-if (apiKeySalva) {
-  apiKeyInput.value = apiKeySalva;
-  salvarKeyCheckbox.checked = true;
-}
-
-apiKeyInput.addEventListener("input", () => {
-  if (salvarKeyCheckbox.checked) {
-    localStorage.setItem("apiKey", apiKeyInput.value.trim());
-  } else {
-    localStorage.removeItem("apiKey");
-  }
-});
-
 perguntaTextarea.addEventListener("input", () => {
   const currentLength = perguntaTextarea.value.length;
   contagemCaracteres.textContent = `${currentLength}/${MAXIMO_CARACTERES}`;
