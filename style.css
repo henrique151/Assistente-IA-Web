@@ -78,9 +78,10 @@ body {
 /* Configurações do cabeçalho */
 .configuracoes {
   display: flex;
-  gap: 40px;
-  align-items: center;
+  gap: 20px;
+  align-items: flex-start;
   justify-content: center;
+  flex-wrap: wrap;
 }
 
 .configuracoes label {
@@ -99,6 +100,22 @@ body {
   font-size: 16px;
   color: var(--text-color);
   transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.campo-api {
+  display: flex;
+  flex-direction: column;
+}
+
+.campo-modelo {
+  display: flex;
+  flex-direction: column;
+}
+
+.salvar-api-container {
+  margin-top: 5px;
+  display: inline-flex;
+  align-items: center;
 }
 
 /* Conteúdo principal */
@@ -290,5 +307,24 @@ label[for="salvar-key"] {
   #btn-perguntar {
     font-size: 14px;
     padding: 8px 12px;
+  }
+}
+
+#feedback-copiar {
+  animation: fadeInOut 2s ease forwards;
+}
+
+@keyframes fadeInOut {
+  0% {
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
   }
 }
