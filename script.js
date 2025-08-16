@@ -109,6 +109,10 @@ async function enviarPergunta() {
     containerResposta.scrollIntoView({ behavior: "smooth", block: "end" });
 
     salvarHistorico(pergunta, respostaTexto);
+
+    //Limpar Text Area após envio
+    perguntaTextarea.value = "";
+    contagemCaracteres.textContent = `0/${MAXIMO_CARACTERES}`;
   } catch (erro) {
     mostrarErro("Erro na conexão. Verifique sua internet e tente novamente.");
     console.error(erro);
@@ -153,11 +157,38 @@ btnLimparHistorico.addEventListener("click", () => {
   historico = [];
 });
 
-btnCopiar.addEventListener("click", () => {
+/* btnCopiar.addEventListener("click", () => {
   const textoParaCopiar = `${perguntaExibida.innerText}\n${respostaDiv.innerText}`;
   navigator.clipboard.writeText(textoParaCopiar).then(() => {
     alert("Pergunta e resposta copiadas!");
   });
+}); */
+
+// Botao Versao Camila
+btnCopiar.addEventListener("click", async () => {
+  const textoParaCopiar = `${perguntaExibida.innerText}\n${respostaDiv.innerText}`;
+  const feedbackCopiar = document.getElementById("feedback-copiar");
+
+  try {
+    if (!navigator.clipboard) {
+      throw new Error("Clipboard API não disponível.");
+    }
+
+    await navigator.clipboard.writeText(textoParaCopiar);
+
+    // Esconde botão e mostra feedback
+    btnCopiar.style.display = "none";
+    feedbackCopiar.style.display = "inline";
+
+    // Após 2 seg, esconde feedback e volta o botão
+    setTimeout(() => {
+      feedbackCopiar.style.display = "none";
+      btnCopiar.style.display = "inline-flex"; // para manter alinhamento ícone/texto
+    }, 2000);
+  } catch (erro) {
+    console.error("Erro ao copiar:", erro);
+    alert("Não foi possível copiar. Verifique as permissões do navegador.");
+  }
 });
 
 const btnExportPDF = document.getElementById("btn-export");
